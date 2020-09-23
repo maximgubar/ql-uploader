@@ -63,7 +63,6 @@ class DemoUploadCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        dump($this->defaultStorage->listContents());
         foreach ($this->defaultStorage->listContents() as $fileData) {
             if ($fileData['type'] !== 'file') {
                 continue;
@@ -71,10 +70,11 @@ class DemoUploadCommand extends Command
             if ($this->demosStorage->has($fileData['basename'])) {
                 $this->demosStorage->delete($fileData['basename']);
             }
+
+            $io->comment('Processing ' . $fileData['basename']);
+
             $fileContents = $this->defaultStorage->read($fileData['path']);
             $this->demosStorage->write($fileData['basename'], $fileContents);
-
-            $io->table([], $this->demosStorage->listContents());
 
             $response = $this->httpClient->request('POST', $this->igmdbConfig->getBaseUrl() . '/processor.php?action=submitDemo', [
                 'body' => [
@@ -90,8 +90,6 @@ class DemoUploadCommand extends Command
 
             $this->demosStorage->delete($fileData['basename']);
         }
-
-        $io->table([], $this->demosStorage->listContents());
 
         return Command::SUCCESS;
     }
