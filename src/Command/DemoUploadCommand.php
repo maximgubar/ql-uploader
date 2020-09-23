@@ -101,7 +101,7 @@ class DemoUploadCommand extends Command
         $parts = explode('-', $filename);
         $parts = array_filter($parts, fn($value) => !is_null($value) && $value !== '');
         $parts = array_values($parts);
-        list($gameType, $nickname, $mapName, $date) = $parts;
+        [$gameType, $nickname, $mapName, $date] = $parts;
         $date = \DateTime::createFromFormat('Y_m_d', $date);
         return sprintf(
             '[%s] %s by %s (%s)',
