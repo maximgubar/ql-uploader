@@ -1,5 +1,5 @@
 {
-    "name": "QL Uploader",
+    "name": "maximgubar/ql-uploader",
     "description": "Allows you to upload QL demos to IGMDB",
     "type": "project",
     "license": "proprietary",
