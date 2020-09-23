@@ -88,7 +88,7 @@ class DemoUploadCommand extends Command
             $io->note(
                 sprintf('%s ::: %s %s', $fileData['basename'], $response->getStatusCode(), $response->getContent())
             );
-
+            $this->defaultStorage->delete($fileData['path']);
             $this->demosStorage->delete($fileData['basename']);
         }
 
