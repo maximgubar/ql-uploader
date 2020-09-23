@@ -75,7 +75,7 @@ class DemoUploadCommand extends Command
             $this->demosStorage->write($fileData['basename'], $fileContents);
 
             $io->table([], $this->demosStorage->listContents());
-            /////////
+
             $response = $this->httpClient->request('POST', $this->igmdbConfig->getBaseUrl() . '/processor.php?action=submitDemo', [
                 'body' => [
                     'api_key' => $this->igmdbConfig->getApiKey(),
