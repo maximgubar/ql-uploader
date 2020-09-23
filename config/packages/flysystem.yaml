@@ -1,0 +1,16 @@
+# Read the documentation at https://github.com/thephpleague/flysystem-bundle/blob/master/docs/1-getting-started.md
+flysystem:
+    storages:
+        default.storage:
+            adapter: 'local'
+            options:
+                directory: '%kernel.project_dir%/var/storage/default'
+        demos.storage:
+            adapter: 'sftp'
+            options:
+                host: '%env(STORAGE_DEMOS_HOST)%'
+                port: 22
+                username: '%env(STORAGE_DEMOS_USERNAME)%'
+                password: '%env(STORAGE_DEMOS_PASSWORD)%'
+                root: '%env(STORAGE_DEMOS_BASE_DIR)%'
+                timeout: 10
