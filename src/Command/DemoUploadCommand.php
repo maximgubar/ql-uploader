@@ -81,6 +81,7 @@ class DemoUploadCommand extends Command
                     'api_key' => $this->igmdbConfig->getApiKey(),
                     'demo_url' => $this->demoPublicUrl . $fileData['basename'],
                     'stream_title' => $fileData['filename'],
+                    'resolution' => 14,
                 ],
             ]);
 
