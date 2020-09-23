@@ -67,6 +67,7 @@ class DemoUploadCommand extends Command
             if ($fileData['type'] !== 'file') {
                 continue;
             }
+
             if ($this->demosStorage->has($fileData['basename'])) {
                 $this->demosStorage->delete($fileData['basename']);
             }
@@ -80,7 +81,7 @@ class DemoUploadCommand extends Command
                 'body' => [
                     'api_key' => $this->igmdbConfig->getApiKey(),
                     'demo_url' => $this->demoPublicUrl . $fileData['basename'],
-                    'stream_title' => $fileData['filename'],
+                    'stream_title' => $this->getDemoName($fileData['filename']),
                     'resolution' => 14,
                 ],
             ]);
@@ -93,5 +94,21 @@ class DemoUploadCommand extends Command
         }
 
         return Command::SUCCESS;
+    }
+
+    private function getDemoName(string $filename): string
+    {
+        $parts = explode('-', $filename);
+        $parts = array_filter($parts, fn($value) => !is_null($value) && $value !== '');
+        $parts = array_values($parts);
+        list($gameType, $nickname, $mapName, $date) = $parts;
+        $date = \DateTime::createFromFormat('Y_m_d', $date);
+        return sprintf(
+            '[%s] %s by %s (%s)',
+            $gameType,
+            $mapName,
+            $nickname,
+            $date->format('Y-m-d')
+        );
     }
 }
